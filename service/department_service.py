@@ -35,8 +35,6 @@ class DepartmentService:
 
     def fetch_department_by_id(self, did):
 
-
-
         try:
             self.dept = Department()
             self.db_dept.execute_dynamic_query("select * from department where dept_id = ?", did)

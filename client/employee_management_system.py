@@ -69,6 +69,7 @@ def main():
                 print("Choose department id from the existing department - \n ************************************")
                 dept_service.fetch_all_department()
                 did = input("Enter the department id - ")
+
                 emp.dept = dept_service.fetch_department_by_id(did)
                 if validate_employee_input(emp):
                     service.save_employee(emp)
@@ -88,9 +89,11 @@ def main():
                 dept_service.fetch_all_department()
                 dept.dept_id = input ("Enter the department id - ")
                 dept.dept_name = input ("Enter the department name - ")
-
-                dept_service.save_department(dept)
-                department_file_operations()
+                if validate_department_input(dept):
+                    dept_service.save_department(dept)
+                    department_file_operations()
+                else:
+                    print("Please enter correct inputs.")
 
 
             if value == 5:
@@ -233,6 +236,17 @@ def validate_employee_input(uemp:Employee):
     except ValueError:
         validated = False
         print("""The date of birth should be in "yyyy-mm-dd""""")
+
+    return validated
+
+def validate_department_input(dept:Department):
+    validated: bool = True
+    if str(dept.dept_id).isalpha() == False:
+        validated = False
+        print("Enter proper department ID. It cannot be empty")
+    if str(dept.dept_name).isalpha() == False:
+        validated = False
+        print("Enter proper department name. Department name should not be empty.")
 
     return validated
 
